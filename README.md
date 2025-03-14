@@ -19,10 +19,10 @@ of brand names for those without valid cik (852 brands). Input: ugov_cik.dta. Ou
 
 2. 0a_yougov_public-{0-2}.py: these files use the revelio job position files and the Revelio coompany reference files. This python file selects all job position histories that are in US and have a valid cik by matching through rcid. It generates a lists of public job history files with company information from company reference files. Input: company_ref_00{00-31}_part_00.parquet, Individual_Job_Positions_and_Job_History-{0-768}.csv.gz. Output: yougov_public_job_history-{0-48}.csv.
 
-3. 0aa_yougov_public_list.py: this file uses public_brand_list.csv and yougov_public_job_history-{0-48}.csv to get a list of public brands that appear in both YouGov and Revelio. (401 firms) Input: 
-public_brand_list.csv, yougov_public_job_history-{0-48}.csv. Output: public_brand_list_revelio_new.csv.
+3. 0aa_yougov_public_list.py: this file uses public_brand_list.csv and yougov_public_job_history-{0-48}.csv to get a list of public brands that appear in both YouGov and Revelio. (401 firms) The "firm" column is the company name from the YouGov file. Input: 
+public_brand_list.csv, yougov_public_job_history-{0-48}.csv. Output: public_brand_list_revelio_new.csv. 
 
-4. 0b_yougov_private_direct.py: this file uses the private brand list generated above and the Revelio company reference files. It uses the brand name from yougov private brand list to match with company name or child company or ultimate parent company name (both original names and names without spaces) in the Revelio company reference file. This generates a list of private brands that can be matched directly. (307 firms) Input: private_brand_list.csv, company_ref_00{00-31}_part_00.parquet. Output: private_rcid_direct_2.csv, private_unmatched_brands_2.csv. 
+4. 0b_yougov_private_direct.py: this file uses the private brand list generated above and the Revelio company reference files. It uses the brand name from yougov private brand list to match with company name or child company or ultimate parent company name (both original names and names without spaces) in the Revelio company reference file. This generates a list of private brands that can be matched directly. (307 firms) The "Brand" column is the brand column from the YouGov file. Input: private_brand_list.csv, company_ref_00{00-31}_part_00.parquet. Output: private_rcid_direct_2.csv, private_unmatched_brands_2.csv. 
 
 5. 0c_yougov_private_clean_direct.py: this file uses the private brand direct list to select job histories from revelio job history files. Input: private_brand_rcid_direct_2.csv, individual_Job_Positions_and_Job_History-{0-768}.csv.gz. Output: yougov_private_direct_job_history-{0-3}.csv.
 
