@@ -4,9 +4,13 @@ The code for the project "Marketing employee turnover and brand performance: evi
 Here is the work flow for running the codes.
 
 directory = '/work/SafeGraph/revelio/code'
+
 sdirectory = '/work/SafeGraph/revelio/data'
+
 tdirectory = '/work/SafeGraph/revelio/data/yougov_new'
+
 fdirectory = '/work/SafeGraph/revelio/data/2023latest'
+
 fvdirectory = '/work/SafeGraph/revelio/data/yougov'
 
 
