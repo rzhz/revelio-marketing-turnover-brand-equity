@@ -36,7 +36,7 @@ the corresponding names from both sources. (26 brands, 21 firms) Input: company_
 
 9. 0f_yougov_brand_employee_quarterly-{0-7}.py, 0f_yougov_brand_employee_quarterly_coombine.py: these files use all the public and private job history files to get the quarterly number of current employees, average tenure and average salary for each firm. Input: public_brand_list_revelio_new.csv, yougov_public_job_history-{0-48}.csv, yougov_private_direct_job_history-{0-3}.csv, yougov_private_fuzzy_job_history-{0-3}.csv. Output: brand_turnover_overall_quarterly.csv.
 
-10. 0g_yougov_mkt_exe_job_history.py: this file uses all the public and private job history files generated above to select marketing employees at each seniority level from them. Input: public_brand_list_revelio_new.csv, yougov_public_job_history-{0-48}.csv, yougov_private_direct_job_history-{0-3}.csv, yougov_private_fuzzy_job_history-{0-3}.csv. Output: yougov_exe_job_history_no_seniority.csv.
+10. 0g_yougov_mkt_exe_job_history.py: this file uses all the public and private job history files generated above to select marketing employees, without specifying the seniority level. Input: public_brand_list_revelio_new.csv, yougov_public_job_history-{0-48}.csv, yougov_private_direct_job_history-{0-3}.csv, yougov_private_fuzzy_job_history-{0-3}.csv. Output: yougov_exe_job_history_no_seniority.csv.
 
 11. 4_yougov_embedding.py: this file uses the selected job history files to assign text embeddings for all the unique job titles. Input: yougov_mkt_exe_job_history_no_seniority.csv. Output: unique_job_titles_with_embeddings.csv.
 
