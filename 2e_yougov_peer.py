@@ -11,17 +11,20 @@ with open(os.path.join(directory, "peers_dict.json"), "r") as json_file:
     peers_dict = json.load(json_file)
 
 # Load job history data
-filtered_job_history = pd.read_csv(os.path.join(directory, "yougov_mkt_peer_job_history.csv"), lineterminator='\n', low_memory=False)
+df = pd.read_csv(os.path.join(directory, "yougov_mkt_peer_job_history.csv"), lineterminator='\n', low_memory=False)
+
+# Combine seniority levels
+df['SENIORITY_LEVEL'] = df['SENIORITY_LEVEL'].replace({1: 1, 2: 1, 4: 4, 5: 5})
 
 # Convert dates to datetime once for the whole dataset
-filtered_job_history['STARTDATE'] = pd.to_datetime(filtered_job_history['STARTDATE'], errors='coerce')
-filtered_job_history['ENDDATE'] = pd.to_datetime(filtered_job_history['ENDDATE'], errors='coerce')
+df['STARTDATE'] = pd.to_datetime(df['STARTDATE'], errors='coerce')
+df['ENDDATE'] = pd.to_datetime(df['ENDDATE'], errors='coerce')
 
 # Sort the entire dataset once for efficiency
-filtered_job_history.sort_values(by=['USER_ID', 'STARTDATE'], inplace=True)
+df.sort_values(by=['USER_ID', 'STARTDATE'], inplace=True)
 
 # Precompute lagged column for 'previous_parent' globally
-filtered_job_history['previous_parent'] = filtered_job_history.groupby('USER_ID')['ULTIMATE_PARENT_RCID'].shift(1)
+df['previous_parent'] = df.groupby('USER_ID')['ULTIMATE_PARENT_RCID'].shift(1)
 
 # Initialize aggregated dataframes
 aggregated_peer_hire = []
@@ -38,8 +41,8 @@ for brand, peers_info in peers_dict.items():
     peers_of_peers_rcids = set(peers_info['peers_of_peers'])
 
     # Filter data once for peers and peers of peers
-    peer_df = filtered_job_history[filtered_job_history['RCID'].isin(peers_rcids)]
-    peer_peer_df = filtered_job_history[filtered_job_history['RCID'].isin(peers_of_peers_rcids)]
+    peer_df = df[df['RCID'].isin(peers_rcids)]
+    peer_peer_df = df[df['RCID'].isin(peers_of_peers_rcids)]
 
     # Filter rows where the brand has changed or previous brand is missing
     filtered_peer_df = peer_df[(peer_df['ULTIMATE_PARENT_RCID'] != peer_df['previous_parent']) | peer_df['previous_parent'].isna()]
@@ -50,7 +53,7 @@ for brand, peers_info in peers_dict.items():
     num_peers_of_peers = filtered_peer_peer_df['ULTIMATE_PARENT_RCID'].nunique()
 
     # Process seniority levels
-    for seniority in [1, 2, 3, 4, 5]:
+    for seniority in [1, 3, 4, 5]:
         # Filter and aggregate for peers
         peer_hires = (
             filtered_peer_df[filtered_peer_df['SENIORITY_LEVEL'] == seniority]
