@@ -48,7 +48,7 @@ the corresponding names from both sources. (26 brands, 21 firms) Input: company_
 
 15. 2c_peer_embedding-{0-9}.py: this file uses the dictionary file and the all peer job history file to get text embeddings for all unique job titles that appear in peers-of-peer firms. Input: filtered_job_history_all_peers.csv. Output: unique_job_titles_with_embeddings_peer-{0-9}.csv. 
 
-16. 2d_yougov_embedding_keyword_multi.py: this file uses the same 2-step LLM method to assign digital roles and seniority levels to all the job histories of peers-of-peer firms. Input: filtered_job_history_all_peers.csv, unique_job_titles_with_embeddings_peer-{0-9}.csv. Output: yougov_mkt_peer_job_history.csv, complete_peer_job_titles.xlsx.
+16. 2d_peer_embedding_keyword_hybrid.py: this file uses the same 2-step LLM method to assign digital roles and seniority levels to all the job histories of peers-of-peer firms. Input: filtered_job_history_all_peers.csv, unique_job_titles_with_embeddings_peer-{0-9}.csv. Output: yougov_mkt_peer_job_history.csv, complete_peer_job_titles.xlsx.
 
 17. 2e_yougov_peer.py: this file constructs the number of marketing employee hires and leaves at each seniority level for each firm at each day. Input: peers_dict.json, yougov_mkt_peer_job_history.csv, Output: aggregated_peer_hire.csv, aggregated_peer_peer_hire.csv, aggregated_peer_leave.csv, aggregated_peer_peer_leave.csv.
 
